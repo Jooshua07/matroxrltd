@@ -21,7 +21,7 @@ const advisory = [
 
 const groups = [
   {
-    id: 'water', title: 'Water and sanitation', image: 'utility-tank', alt: 'Water storage tanks on trucks at a utility site',
+    id: 'water', title: 'Water and sanitation', image: 'sanitation', alt: 'Pipework fitted along a sanitation facility',
     summary: 'Understand how water and sanitation services perform and where coverage, reliability and infrastructure can improve.',
     side: 'right', offset: 'down', background: 'white', detailsBackground: 'white', services: water,
   },
@@ -38,7 +38,7 @@ const groups = [
 ];
 ---
 <SiteLayout title="Services" description="Explore Matrox’s water and sanitation assessments, groundwater advisory, utility performance reviews, community research and project monitoring services.">
-  <Editorial title="Consultancy services" image="sanitation" alt="Pipework fitted along a sanitation facility" background="paper" intro>
+  <Editorial title="Consultancy services" image="consultancy-office" alt="Illustration of consultants reviewing a water-network map in an office" background="paper" intro>
     <p>Field research and technical advisory for water utilities, public institutions and development partners.</p>
   </Editorial>
   {groups.map(({ summary, detailsBackground, services, ...editorial }) => (

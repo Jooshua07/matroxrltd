@@ -23,3 +23,5 @@ Netlify's build URL supplies the default canonical domain. If needed, set `SITE_
 The company-profile download is `public/downloads/matrox-company-profile.pdf`, a web-optimised copy of the final 25-page profile. See [design.md](design.md) for visual and motion guidance.
 
 Website field photography comes from Bantu Ventures Limited images reproduced in the Matrox company profile. These images illustrate the subject matter and carry their source attribution here.
+
+The Services introduction uses an image generated with ImageGen. The people and office are fictional.
