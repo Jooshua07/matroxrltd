@@ -1,0 +1,17 @@
+---
+const { title, image, alt, side = 'right', background = 'white', offset = 'down', intro = false, id } = Astro.props;
+---
+<section id={id} class:list={['editorial', `image-${side}`, `offset-${offset}`, { paper: background === 'paper', 'editorial-intro': intro }]}>
+  <div class="container editorial-grid">
+    <div class="editorial-panel" data-reveal="panel">
+      <span class="rule" aria-hidden="true"></span>
+      {intro ? <h1>{title}</h1> : <h2>{title}</h2>}
+      <slot />
+    </div>
+    <figure class="editorial-photo" data-reveal="photo">
+      <div class="photo-frame">
+        <img src={`/images/${image}.webp`} width="1200" height="800" alt={alt} loading={intro ? 'eager' : 'lazy'} decoding="async" />
+      </div>
+    </figure>
+  </div>
+</section>

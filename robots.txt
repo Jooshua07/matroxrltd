@@ -1,0 +1,5 @@
+# Prelaunch default. Update when the production site is ready for crawling.
+User-agent: *
+Disallow: /
+
+# At launch, add Sitemap: https://<production-domain>/sitemap.xml

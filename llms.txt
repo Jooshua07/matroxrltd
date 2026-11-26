@@ -1,0 +1,11 @@
+# Matrox Resources Limited
+
+> Matrox Resources Limited is a Lusaka consultancy providing water and sanitation assessments, field research, and technical advisory in Zambia.
+
+## Company
+
+- [About Matrox](/about-us/): Company overview, mission and working values.
+- [Services](/services/): Water and sanitation, utility performance, stakeholder research and technical advisory.
+- [Our Experience](/our-experience/): Selected water utility and community research assignments.
+- [Contact](/contact-us/): Lusaka office and enquiry form.
+- [Company profile (PDF)](/downloads/matrox-company-profile.pdf): Download the company profile.

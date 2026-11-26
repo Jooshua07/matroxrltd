@@ -1,0 +1,46 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Editorial from '../components/Editorial.astro';
+---
+<SiteLayout title="Water and sanitation consultancy in Zambia" description="Matrox Resources Limited is a Lusaka consultancy helping water utilities, public institutions and development partners assess services and plan improvements." overview>
+  <section class="home-hero" data-hero>
+    <div class="hero-media" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 640px)" srcset="/images/hero-mobile.webp" />
+        <img src="/images/hero.webp" width="1600" height="1000" alt="" fetchpriority="high" />
+      </picture>
+    </div>
+    <div class="container hero-inner">
+      <span class="rule hero-entrance" aria-hidden="true"></span>
+      <h1 class="hero-entrance">Water and sanitation consultancy in Zambia</h1>
+      <p class="hero-entrance">We help utilities, public institutions and development partners understand how services work on the ground and where to improve them.</p>
+      <div class="actions hero-entrance">
+        <a class="button button-light" href="/services/">Explore our services</a>
+        <a class="button button-outline" href="/downloads/matrox-company-profile.pdf" download>Download company profile <span>(PDF)</span></a>
+      </div>
+    </div>
+  </section>
+
+  <Editorial title="Research grounded in the field" image="water-storage" alt="Elevated water storage tank at a project site" background="paper">
+    <p>From household surveys to infrastructure assessments, we bring community experience and technical observations together so clients can set priorities with confidence.</p>
+    <a class="text-link" href="/about-us/">About Matrox</a>
+  </Editorial>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading" data-reveal="rise"><span class="rule" aria-hidden="true"></span><h2>What we do</h2></div>
+      <div class="summary-grid" data-stagger>
+        <article data-reveal="rise"><h3><a href="/services/#water">Water and sanitation</a></h3><p>Assess access, infrastructure, groundwater and service reliability.</p></article>
+        <article data-reveal="rise"><h3><a href="/services/#research">Research and utility performance</a></h3><p>Gather evidence from households, customers and stakeholders.</p></article>
+        <article data-reveal="rise"><h3><a href="/services/#advisory">Technical and project advisory</a></h3><p>Review site readiness and support planning, monitoring and handover.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <Editorial title="Experience with water utilities and communities" image="utility-tank" alt="Water infrastructure at a utility project site" side="left" offset="up" background="paper">
+    <p>Explore assignments on water availability, customer experience and access to water and sanitation services.</p>
+    <a class="text-link" href="/our-experience/">View our experience</a>
+  </Editorial>
+
+  <section class="section"><div class="container closing" data-reveal="rise"><div><span class="rule" aria-hidden="true"></span><h2>Discuss your next assignment</h2></div><a class="button" href="/contact-us/">Contact us</a></div></section>
+</SiteLayout>

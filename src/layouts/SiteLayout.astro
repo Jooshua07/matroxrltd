@@ -1,0 +1,69 @@
+---
+import '@fontsource-variable/montserrat';
+import '../styles/site.css';
+import ContactLinks from '../components/ContactLinks.astro';
+
+const { title, description, overview = false, noindex = false } = Astro.props;
+const links = [['/', 'Overview'], ['/services/', 'Services'], ['/our-experience/', 'Our Experience'], ['/about-us/', 'About Us'], ['/contact-us/', 'Contact Us']];
+const current = Astro.url.pathname.replace(/\/?$/, '/');
+const pageTitle = `${title} | Matrox Resources Limited`;
+const canonical = Astro.site && !noindex ? new URL(current, Astro.site) : undefined;
+---
+<!doctype html>
+<html lang="en-ZM">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {Astro.site && <meta property="og:image" content={new URL('/images/hero.webp', Astro.site)} />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    {canonical && <meta property="og:url" content={canonical} />}
+    <link rel="icon" href="/images/matrox-emblem.webp" type="image/webp" />
+  </head>
+  <body class:list={{ overview }}>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header" data-header>
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="Matrox Resources Limited, Overview">
+          <img class="brand-light" src="/images/matrox-logo.webp" width="324" height="100" alt="" />
+          <img class="brand-dark" src="/images/matrox-logo-reversed.webp" width="324" height="100" alt="" />
+        </a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+          {links.map(([url, label]) => <a href={url} aria-current={current === url ? 'page' : undefined}>{label}</a>)}
+        </nav>
+        <details class="mobile-nav">
+          <summary>Menu <span class="menu-icon" aria-hidden="true"></span></summary>
+          <nav aria-label="Mobile navigation">
+            {links.map(([url, label]) => <a href={url} aria-current={current === url ? 'page' : undefined}>{label}</a>)}
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main id="main" tabindex="-1"><slot /></main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <a href="/" aria-label="Matrox Resources Limited, Overview"><img src="/images/matrox-logo-reversed.webp" width="184" height="57" alt="" /></a>
+          <p>Water and sanitation consultancy<br />Lusaka, Zambia</p>
+        </div>
+        <nav aria-label="Footer navigation">
+          {links.map(([url, label]) => <a href={url}>{label}</a>)}
+        </nav>
+        <div class="footer-contact">
+          <ContactLinks />
+          <a href="mailto:matroxresourcesltd@gmail.com">matroxresourcesltd@gmail.com</a>
+          <a href="/downloads/matrox-company-profile.pdf" download>Download company profile <span>(PDF)</span></a>
+        </div>
+      </div>
+      <div class="container footer-bottom">© {new Date().getFullYear()} Matrox Resources Limited</div>
+    </footer>
+    <script>
+      import '../scripts/motion';
+    </script>
+  </body>
+</html>

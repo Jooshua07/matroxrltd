@@ -1,0 +1,29 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import ContactLinks from '../components/ContactLinks.astro';
+---
+<SiteLayout title="Contact Us" description="Get in touch with Matrox Resources Limited in Lusaka to discuss a water, sanitation, research or technical advisory assignment.">
+  <section class="compact-intro paper"><div class="container" data-reveal="rise"><span class="rule" aria-hidden="true"></span><h1>Contact us</h1><p>Tell us about the assignment you have in mind.</p></div></section>
+  <section class="section"><div class="container contact-grid">
+    <div>
+      <h2>Matrox Resources Limited</h2>
+      <address>House No. 50, Lunthanya Street<br />Libala Stage 2, Lusaka, Zambia
+        <ContactLinks />
+        <a href="mailto:matroxresourcesltd@gmail.com">matroxresourcesltd@gmail.com</a>
+      </address>
+      <a class="button" href="/downloads/matrox-company-profile.pdf" download>Download company profile (PDF)</a>
+    </div>
+    <div>
+      <h2>Send an enquiry</h2>
+      <form class="enquiry" name="enquiry" method="POST" action="/enquiry-received/" data-netlify="true" netlify-honeypot="website">
+        <input type="hidden" name="form-name" value="enquiry" />
+        <p hidden><label>Leave this field empty <input name="website" tabindex="-1" autocomplete="off" /></label></p>
+        <label>Name <input name="name" autocomplete="name" maxlength="120" required /></label>
+        <label>Email <input type="email" name="email" autocomplete="email" maxlength="254" required /></label>
+        <label>Organisation (optional) <input name="organisation" autocomplete="organization" maxlength="160" /></label>
+        <label>How can we help? <textarea name="message" rows="6" maxlength="4000" required></textarea></label>
+        <button class="button" type="submit">Send enquiry</button>
+      </form>
+    </div>
+  </div></section>
+</SiteLayout>
