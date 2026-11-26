@@ -111,7 +111,7 @@ These values adapt the profile to screens. Put the shared custom properties in `
 | Services | Lead with a staggered photo and navy content panel. Alternate alignment for featured services and use sharp, bordered sections for compact summaries. On detail pages, describe the scope and typical deliverable. |
 | Projects | Use a landscape thumbnail, descriptive title and verified client or location. Structure detail pages around the assignment purpose, what Matrox assessed and what the findings informed. Track source attribution in the README and identify any Bantu assignment explicitly in the project copy. |
 | Credentials | Present verified credentials as a compact list or grid with the issuer name and scope. Verify current status and permission before publishing marks. |
-| Contact and footer | Place the contact details on white and put the enquiry form in a bordered navy panel with white labels and light fields. Use a `tel:` link for Call and a `wa.me` link for WhatsApp. Use the reversed logo and white type in the navy footer. |
+| Contact and footer | Place the contact details on white and put the enquiry form in a bordered navy panel with white labels and light fields. Give the form fields and coral submit button matching `0.375rem` corners. Use deep navy for the submit label. Use a `tel:` link for Call and a `wa.me` link for WhatsApp. Use the reversed logo and white type in the navy footer. |
 
 ### Layered editorial sections
 

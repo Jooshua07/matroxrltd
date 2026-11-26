@@ -115,10 +115,12 @@ figure { margin: 0; }
 .enquiry-panel h2 { color: inherit; }
 .enquiry { display: grid; gap: .85rem; }
 .enquiry label { display: grid; gap: .28rem; font-weight: 700; }
-.enquiry input, .enquiry textarea { min-width: 0; min-height: 2.75rem; padding: .65rem .75rem; border: 1px solid #718399; border-radius: 0; color: var(--ink); background: var(--white); font: inherit; font-weight: 400; }
+.enquiry :is(input, textarea, .button) { border-radius: .375rem; }
+.enquiry input, .enquiry textarea { min-width: 0; min-height: 2.75rem; padding: .65rem .75rem; border: 1px solid #718399; color: var(--ink); background: var(--white); font: inherit; font-weight: 400; }
 .enquiry textarea { resize: vertical; }
 .enquiry :focus-visible { outline-color: var(--white); }
-.enquiry .button { justify-self: start; margin: 0; }
+.enquiry .button { justify-self: start; margin: 0; color: #0c263f; background: var(--coral); border-color: var(--coral); }
+.enquiry .button:hover { background: #ff825b; border-color: #ff825b; }
 
 .site-footer { background: var(--navy); color: var(--white); padding-top: clamp(2.3rem, 4.2vw, 4rem); }
 .footer-inner { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 2rem; padding-bottom: 2rem; }
