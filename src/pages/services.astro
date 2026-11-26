@@ -18,22 +18,40 @@ const advisory = [
   ['Project planning and construction monitoring', 'Clarify scope and dependencies, document site progress, and support completion and handover planning.'],
   ['Site development and readiness', 'Review terrain, infrastructure and site constraints, then identify surveys, approvals and enabling works.'],
 ];
+
+const groups = [
+  {
+    id: 'water', title: 'Water and sanitation', image: 'utility-tank', alt: 'Water storage tanks on trucks at a utility site',
+    summary: 'Understand how water and sanitation services perform and where coverage, reliability and infrastructure can improve.',
+    side: 'right', offset: 'down', background: 'white', detailsBackground: 'white', services: water,
+  },
+  {
+    id: 'research', title: 'Research and utility performance', image: 'community-water', alt: 'Community water infrastructure',
+    summary: 'Give customer and community experiences a clear place in service planning.',
+    side: 'left', offset: 'up', background: 'paper', detailsBackground: 'white', services: research,
+  },
+  {
+    id: 'advisory', title: 'Technical and project advisory', image: 'field-site', alt: 'Field crew and drilling equipment at a project site',
+    summary: 'Identify what needs to happen on site and keep track of decisions through delivery.',
+    side: 'right', offset: 'down', background: 'paper', detailsBackground: 'paper', services: advisory,
+  },
+];
 ---
 <SiteLayout title="Services" description="Explore Matrox’s water and sanitation assessments, groundwater advisory, utility performance reviews, community research and project monitoring services.">
   <Editorial title="Consultancy services" image="sanitation" alt="Pipework fitted along a sanitation facility" background="paper" intro>
     <p>Field research and technical advisory for water utilities, public institutions and development partners.</p>
   </Editorial>
-  <section class="section" id="water"><div class="container">
-    <div class="section-heading" data-reveal="rise"><span class="rule" aria-hidden="true"></span><h2>Water and sanitation</h2><p>Understand how water and sanitation services perform and where coverage, reliability and infrastructure can improve.</p></div>
-    <div class="detail-list">{water.map(([name, description]) => <article data-reveal="rise"><h3>{name}</h3><p>{description}</p></article>)}</div>
-  </div></section>
-  <Editorial title="Research and utility performance" image="community-water" alt="Community water infrastructure" side="left" offset="up" background="paper" id="research">
-    <p>Give customer and community experiences a clear place in service planning.</p>
-  </Editorial>
-  <section class="section"><div class="container detail-list">{research.map(([name, description]) => <article data-reveal="rise"><h3>{name}</h3><p>{description}</p></article>)}</div></section>
-  <section class="section paper" id="advisory"><div class="container">
-    <div class="section-heading" data-reveal="rise"><span class="rule" aria-hidden="true"></span><h2>Technical and project advisory</h2><p>Identify what needs to happen on site and keep track of decisions through delivery.</p></div>
-    <div class="detail-list">{advisory.map(([name, description]) => <article data-reveal="rise"><h3>{name}</h3><p>{description}</p></article>)}</div>
-  </div></section>
+  {groups.map(({ summary, detailsBackground, services, ...editorial }) => (
+    <div class="service-group">
+      <Editorial {...editorial}><p>{summary}</p></Editorial>
+      <div class:list={['section', 'service-details', { paper: detailsBackground === 'paper' }]}>
+        <div class="container detail-list">
+          {services.map(([name, description]) => (
+            <article data-reveal="rise"><h3>{name}</h3><p>{description}</p></article>
+          ))}
+        </div>
+      </div>
+    </div>
+  ))}
   <section class="section"><div class="container closing"><h2>Talk to us about your project</h2><a class="button" href="/contact-us/">Contact us</a></div></section>
 </SiteLayout>
