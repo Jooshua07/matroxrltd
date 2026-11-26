@@ -6,23 +6,41 @@ import ContactLinks from '../components/ContactLinks.astro';
 const { title, description, overview = false, noindex = false } = Astro.props;
 const links = [['/', 'Overview'], ['/services/', 'Services'], ['/our-experience/', 'Our Experience'], ['/about-us/', 'About Us'], ['/contact-us/', 'Contact Us']];
 const current = Astro.url.pathname.replace(/\/?$/, '/');
-const pageTitle = `${title} | Matrox Resources Limited`;
+const siteName = 'Matrox Resources Limited';
+const pageTitle = `${title} | ${siteName}`;
 const canonical = Astro.site && !noindex ? new URL(current, Astro.site) : undefined;
+const socialTitle = overview ? siteName : pageTitle;
+const socialDescription = overview ? 'Water and sanitation consultancy in Zambia. We help utilities, public institutions and development partners assess services and plan improvements.' : description;
+const socialImage = canonical && new URL('/images/matrox-share.jpg', canonical);
+const socialImageAlt = 'Water infrastructure pipes at a project site, framed by a large concrete pipe';
 ---
 <!doctype html>
-<html lang="en-ZM">
+<html lang="en-ZM" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    {Astro.site && <meta property="og:image" content={new URL('/images/hero.webp', Astro.site)} />}
-    {canonical && <link rel="canonical" href={canonical} />}
-    {canonical && <meta property="og:url" content={canonical} />}
+    {canonical && socialImage && <>
+      <link rel="canonical" href={canonical} />
+      <meta property="og:url" content={canonical} />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content={siteName} />
+      <meta property="og:locale" content="en_ZM" />
+      <meta property="og:title" content={socialTitle} />
+      <meta property="og:description" content={socialDescription} />
+      <meta property="og:image" content={socialImage} />
+      <meta property="og:image:type" content="image/jpeg" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={socialImageAlt} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={socialTitle} />
+      <meta name="twitter:description" content={socialDescription} />
+      <meta name="twitter:image" content={socialImage} />
+      <meta name="twitter:image:alt" content={socialImageAlt} />
+    </>}
     <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="16x16 32x32 48x48" />
     <link rel="icon" href="/favicon.png?v=solid" type="image/png" sizes="96x96" />
   </head>
