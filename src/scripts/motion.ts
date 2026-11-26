@@ -30,11 +30,13 @@ if (hero && header) {
   motionAllowed.addEventListener('change', scheduleHero);
 }
 
-if ('IntersectionObserver' in window) {
-  const text = Array.from(document.querySelectorAll<HTMLElement>('main h1, main h2, main h3, main p, .site-footer p'))
-    .filter(element => !element.closest('.enquiry-panel, [hidden]'));
-  text.forEach(element => element.setAttribute('data-scroll-text', ''));
-  const targets = [...document.querySelectorAll<HTMLElement>('[data-reveal]'), ...text];
+const scrollText = Array.from(document.querySelectorAll<HTMLElement>('main h1, main h2, main h3, main p, .site-footer p'))
+  .filter(element => !element.closest('.enquiry-panel, [hidden]'));
+scrollText.forEach(element => element.setAttribute('data-scroll-text', ''));
+
+const nativeScrollMotion = CSS.supports('(animation-timeline: view()) and (animation-range: entry)');
+if (!nativeScrollMotion && 'IntersectionObserver' in window) {
+  const targets = [...document.querySelectorAll<HTMLElement>('[data-reveal]'), ...scrollText];
   const nearby = new Set<HTMLElement>();
   const appliedY = new WeakMap<HTMLElement, number>();
   const stagger = new WeakMap<Element, number>();
@@ -54,7 +56,7 @@ if ('IntersectionObserver' in window) {
       const layerOffset = layer && !layer.matches(':focus-within') ? (appliedY.get(layer) ?? 0) : 0;
       const offset = element.matches(':focus-within') ? 0 : (appliedY.get(element) ?? 0);
       const displacement = layerOffset + offset;
-      const travel = isText ? Math.max(52, Math.min(100, bounds.height)) : Math.max(48, Math.min(145, bounds.height * .65));
+      const travel = isText ? Math.max(65, Math.min(110, bounds.height)) : Math.max(68, Math.min(160, bounds.height * .65));
       const distance = Math.min(bounds.bottom - displacement, viewport - bounds.top + displacement);
       const groupOffset = stagger.get(element) ?? (layer ? stagger.get(layer) : undefined) ?? 0;
       const textOffset = isText && element.tagName === 'P' ? 7 : 0;
@@ -63,9 +65,9 @@ if ('IntersectionObserver' in window) {
       const remaining = 1 - eased;
       const kind = element.dataset.reveal;
       const side = element.closest('.image-left') ? -1 : 1;
-      const amplitude = kind === 'panel' ? -17 : kind === 'photo' ? 21 : 0;
+      const amplitude = kind === 'panel' ? -40 : kind === 'photo' ? 48 : 0;
       const horizontal = wideScreen.matches ? amplitude * side : 0;
-      const vertical = isText ? 12 : kind === 'photo' ? 11 : kind === 'panel' ? 17 : 0;
+      const vertical = isText ? (wideScreen.matches ? 34 : 24) : kind === 'photo' ? 31 : kind === 'panel' ? 28 : 0;
       const y = vertical * remaining;
       return { element, eased, x: horizontal * remaining, y };
     });

@@ -137,7 +137,7 @@ figure { margin: 0; }
   .hero-entrance:nth-child(2) { animation-delay: 65ms; }
   .hero-entrance:nth-child(3) { animation-delay: 130ms; }
   .hero-entrance:nth-child(4) { animation-delay: 195ms; }
-  [data-reveal='panel'], [data-reveal='photo'] { translate: var(--scroll-x, 0px) var(--scroll-y, 0px); opacity: calc(.76 + .24 * var(--scroll-progress, 1)); }
+  [data-reveal='panel'], [data-reveal='photo'] { translate: var(--scroll-x, 0px) var(--scroll-y, 0px); opacity: calc(.34 + .66 * var(--scroll-progress, 1)); }
   [data-scroll-text] { translate: 0 var(--scroll-y, 0px); opacity: var(--scroll-progress, 1); }
   [data-reveal] .rule { scale: calc(.25 + .75 * var(--scroll-progress, 1)) 1; }
   .rule.hero-entrance { animation: rule-in 330ms var(--ease) both; }
@@ -147,7 +147,50 @@ figure { margin: 0; }
   .editorial-intro.offset-up .photo-frame img { animation-delay: 105ms; }
   [data-reveal]:focus-within, [data-scroll-text]:focus-within { translate: none; opacity: 1; }
   .hero-entrance:focus-within { animation: none; }
+
+  @supports (animation-timeline: view()) and (animation-range: entry) {
+    [data-scroll-text] { --motion-x: 0rem; --motion-y: clamp(1.5rem, 3vw, 2.125rem); --motion-opacity: 0; --motion-scale: 1; }
+    p[data-scroll-text] { --motion-y: clamp(1.125rem, 2.2vw, 1.5rem); }
+    [data-reveal='panel'] { --motion-x: -2.5rem; --motion-y: 1.75rem; --motion-opacity: .34; }
+    [data-reveal='photo'] { --motion-x: 3rem; --motion-y: 1.9375rem; --motion-opacity: .34; --motion-scale: .98; }
+    .image-left [data-reveal='panel'] { --motion-x: 2.5rem; }
+    .image-left [data-reveal='photo'] { --motion-x: -3rem; }
+
+    [data-scroll-text]:not(.hero-entrance, .editorial-intro h1, .compact-intro h1, :focus-within),
+    :is([data-reveal='panel'], [data-reveal='photo']):not(:focus-within) {
+      animation: viewport-enter 1ms var(--ease) backwards, viewport-exit 1ms ease-in forwards;
+      animation-timeline: view(block var(--header) 0px);
+      animation-range: entry 0% contain 7%, exit;
+    }
+    [data-reveal] .rule {
+      animation: rule-enter 1ms var(--ease) backwards, rule-exit 1ms ease-in forwards;
+      animation-timeline: view(block var(--header) 0px);
+      animation-range: entry 0% contain 7%, exit;
+    }
+
+    @media (max-width: 49rem) {
+      .editorial :is([data-reveal='panel'], [data-reveal='photo']) { --motion-x: 0rem; }
+    }
+  }
 }
+@keyframes viewport-enter {
+  from {
+    opacity: var(--motion-opacity, 0);
+    translate: var(--motion-x, 0rem) var(--motion-y, 1.5rem);
+    scale: var(--motion-scale, 1);
+  }
+  to { opacity: 1; translate: 0 0; scale: 1; }
+}
+@keyframes viewport-exit {
+  from { opacity: 1; translate: 0 0; scale: 1; }
+  to {
+    opacity: var(--motion-opacity, 0);
+    translate: var(--motion-x, 0rem) calc(var(--motion-y, 1.5rem) * -.6);
+    scale: var(--motion-scale, 1);
+  }
+}
+@keyframes rule-enter { from { scale: .25 1; } to { scale: 1 1; } }
+@keyframes rule-exit { from { scale: 1 1; } to { scale: .25 1; } }
 @keyframes hero-image { from { opacity: .75; transform: scale(1.075); } to { opacity: 1; transform: translateY(var(--hero-shift, 0px)) scale(var(--hero-scale)); } }
 @keyframes rise { from { opacity: .72; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 @keyframes intro-image { from { opacity: .86; transform: scale(1.045); } to { opacity: 1; transform: none; } }
