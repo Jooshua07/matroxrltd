@@ -140,6 +140,7 @@ Use motion to show the relationship between the photograph, panel and text. Tie 
 | Hero scroll | Use image-only parallax, capped at about `24px` on wide screens. Clip the moving image within its own frame and stop updates when the hero is out of view. Keep mobile movement small or omit it where space is tight. |
 | Navigation | Transition background and link colours over `180–240ms`. Crossfade the logo versions in a shared, fixed-size slot. Use a hero boundary observer to switch state and preserve readable contrast throughout. |
 | Section reveal | Derive reveal progress from how far the section has travelled into the viewport. Ease the motion near both ends and use distinct, small offsets for the panel and photo. Use vertical movement in stacked layouts. Stagger related items by a small amount of scroll distance. |
+| Text reveal | Reveal each heading and paragraph as a whole with a short upward movement and fade tied to its own distance from the viewport edge. Reverse the reveal when it moves away. Keep list dividers, navigation and form controls steady. |
 | Accent rule | Grow the rule from its leading edge using the parent section’s reveal progress. |
 | Page navigation | Use a `160–220ms` same-origin crossfade with subtle movement if it suits the page. Keep branding and navigation visually stable. Enable native cross-document transitions for supported browsers and allow ordinary link navigation everywhere. [Astro view transitions](https://docs.astro.build/en/guides/view-transitions/) |
 

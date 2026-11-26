@@ -31,7 +31,10 @@ if (hero && header) {
 }
 
 if ('IntersectionObserver' in window) {
-  const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
+  const text = Array.from(document.querySelectorAll<HTMLElement>('main h1, main h2, main h3, main p, .site-footer p'))
+    .filter(element => !element.closest('.enquiry-panel, [hidden]'));
+  text.forEach(element => element.setAttribute('data-scroll-text', ''));
+  const targets = [...document.querySelectorAll<HTMLElement>('[data-reveal]'), ...text];
   const nearby = new Set<HTMLElement>();
   const appliedY = new WeakMap<HTMLElement, number>();
   const stagger = new WeakMap<Element, number>();
@@ -46,17 +49,24 @@ if ('IntersectionObserver' in window) {
     const viewport = document.documentElement.clientHeight;
     const updates = Array.from(nearby, element => {
       const bounds = element.getBoundingClientRect();
+      const isText = element.hasAttribute('data-scroll-text');
+      const layer = isText ? element.parentElement?.closest<HTMLElement>('[data-reveal]') : null;
+      const layerOffset = layer && !layer.matches(':focus-within') ? (appliedY.get(layer) ?? 0) : 0;
       const offset = element.matches(':focus-within') ? 0 : (appliedY.get(element) ?? 0);
-      const travel = Math.max(48, Math.min(145, bounds.height * .65));
-      const distance = Math.min(bounds.bottom - offset, viewport - bounds.top + offset);
-      const progress = Math.max(0, Math.min(1, (distance - (stagger.get(element) ?? 0)) / travel));
+      const displacement = layerOffset + offset;
+      const travel = isText ? Math.max(52, Math.min(100, bounds.height)) : Math.max(48, Math.min(145, bounds.height * .65));
+      const distance = Math.min(bounds.bottom - displacement, viewport - bounds.top + displacement);
+      const groupOffset = stagger.get(element) ?? (layer ? stagger.get(layer) : undefined) ?? 0;
+      const textOffset = isText && element.tagName === 'P' ? 7 : 0;
+      const progress = Math.max(0, Math.min(1, (distance - groupOffset - textOffset) / travel));
       const eased = progress * progress * (3 - 2 * progress);
       const remaining = 1 - eased;
       const kind = element.dataset.reveal;
       const side = element.closest('.image-left') ? -1 : 1;
       const amplitude = kind === 'panel' ? -17 : kind === 'photo' ? 21 : 0;
       const horizontal = wideScreen.matches ? amplitude * side : 0;
-      const y = (kind === 'photo' ? 11 : 17) * remaining;
+      const vertical = isText ? 12 : kind === 'photo' ? 11 : kind === 'panel' ? 17 : 0;
+      const y = vertical * remaining;
       return { element, eased, x: horizontal * remaining, y };
     });
     for (const { element, eased, x, y } of updates) {
