@@ -13,8 +13,8 @@ import ContactLinks from '../components/ContactLinks.astro';
       </address>
       <a class="button" href="/downloads/matrox-company-profile.pdf" download>Download company profile (PDF)</a>
     </div>
-    <div>
-      <h2>Send an enquiry</h2>
+    <section class="enquiry-panel" aria-labelledby="enquiry-title">
+      <h2 id="enquiry-title">Send an enquiry</h2>
       <form class="enquiry" name="enquiry" method="POST" action="/enquiry-received/" data-netlify="true" netlify-honeypot="website">
         <input type="hidden" name="form-name" value="enquiry" />
         <p hidden><label>Leave this field empty <input name="website" tabindex="-1" autocomplete="off" /></label></p>
@@ -22,8 +22,8 @@ import ContactLinks from '../components/ContactLinks.astro';
         <label>Email <input type="email" name="email" autocomplete="email" maxlength="254" required /></label>
         <label>Organisation (optional) <input name="organisation" autocomplete="organization" maxlength="160" /></label>
         <label>How can we help? <textarea name="message" rows="6" maxlength="4000" required></textarea></label>
-        <button class="button" type="submit">Send enquiry</button>
+        <button class="button button-light" type="submit">Send enquiry</button>
       </form>
-    </div>
+    </section>
   </div></section>
 </SiteLayout>

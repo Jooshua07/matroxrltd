@@ -111,7 +111,7 @@ These values adapt the profile to screens. Put the shared custom properties in `
 | Services | Lead with a staggered photo and navy content panel. Alternate alignment for featured services and use sharp, bordered sections for compact summaries. On detail pages, describe the scope and typical deliverable. |
 | Projects | Use a landscape thumbnail, descriptive title and verified client or location. Structure detail pages around the assignment purpose, what Matrox assessed and what the findings informed. Track source attribution in the README and identify any Bantu assignment explicitly in the project copy. |
 | Credentials | Present verified credentials as a compact list or grid with the issuer name and scope. Verify current status and permission before publishing marks. |
-| Contact and footer | Use navy with white type and the reversed horizontal logo in the footer. Offer explicit Call and WhatsApp links for the same number. Use a `tel:` link for Call and a `wa.me` link for WhatsApp. |
+| Contact and footer | Place the contact details on white and put the enquiry form in a bordered navy panel with white labels and light fields. Use a `tel:` link for Call and a `wa.me` link for WhatsApp. Use the reversed logo and white type in the navy footer. |
 
 ### Layered editorial sections
 
@@ -132,18 +132,18 @@ These values adapt the profile to screens. Put the shared custom properties in `
 
 ## Motion and interactions
 
-Use motion to show the relationship between the photograph, panel and text. Replay section entrances when a section comes back into view after fully leaving the viewport. Keep the effect subtle during normal scrolling.
+Use motion to show the relationship between the photograph, panel and text. Tie scroll reveals to the section's position within the viewport. The elements ease into place as they move into view and rewind as they approach either edge, in either scroll direction.
 
 | Motion | Starting values and behaviour |
 | --- | --- |
 | Hero entrance | `550–750ms` for the photograph to settle from about `scale(1.035)`. Fade and raise copy by `12–16px` over about `400ms`, with `60–90ms` between the heading, support and action. Keep the hero readable from the first paint. |
 | Hero scroll | Use image-only parallax, capped at about `24px` on wide screens. Clip the moving image within its own frame and stop updates when the hero is out of view. Keep mobile movement small or omit it where space is tight. |
 | Navigation | Transition background and link colours over `180–240ms`. Crossfade the logo versions in a shared, fixed-size slot. Use a hero boundary observer to switch state and preserve readable contrast throughout. |
-| Section entrance | Reveal selected sections over `600–700ms` with a gentle ease-out. Move the photo and panel separately by about `6–14px` and use a mild opacity change. Use vertical movement in stacked layouts. Stagger small groups by about `50ms` per item. |
-| Accent rule | Grow the rule from its leading edge with `scaleX` over `250–350ms`. Trigger it with the parent section. |
+| Section reveal | Derive reveal progress from how far the section has travelled into the viewport. Ease the motion near both ends and use distinct, small offsets for the panel and photo. Use vertical movement in stacked layouts. Stagger related items by a small amount of scroll distance. |
+| Accent rule | Grow the rule from its leading edge using the parent section’s reveal progress. |
 | Page navigation | Use a `160–220ms` same-origin crossfade with subtle movement if it suits the page. Keep branding and navigation visually stable. Enable native cross-document transitions for supported browsers and allow ordinary link navigation everywhere. [Astro view transitions](https://docs.astro.build/en/guides/view-transitions/) |
 
-- Use one shared `IntersectionObserver` for section entrances, with a small margin so effects begin just before the element reaches the viewport. Reset each target only once it is outside that margin so a small scroll near the edge cannot flash the content. Keep content visible in the generated HTML and keep focused elements visible during keyboard and deep-link navigation.
+- Use one shared `IntersectionObserver` to track nearby reveal targets. Use a passive scroll listener and `requestAnimationFrame` to update their transforms and opacity. Keep content visible in the generated HTML and keep focused elements visible during keyboard and deep-link navigation.
 - Keep natural scrolling, link behaviour and browser history. Use transform and opacity for moving layers and reserve image dimensions and header space in advance. If parallax needs a script, schedule its updates with `requestAnimationFrame` while the image is in view.
 - Under `prefers-reduced-motion: reduce`, show content in its final position, switch navigation states immediately and disable parallax, staggered reveals and page transitions. Keep scripts optional for reading the content and accessing navigation and contact details.
 - Use shared Astro layouts and static generation. Keep the motion code small and framework-free, and preserve compatibility with GitHub-based Netlify continuous deployment. Before launch, check desktop and mobile, keyboard navigation, reduced motion, JavaScript disabled, direct links and Back/Forward navigation. Verify that the image movement causes no horizontal overflow or clipped content. [Astro’s Netlify deployment guide](https://docs.astro.build/en/guides/deploy/netlify/)

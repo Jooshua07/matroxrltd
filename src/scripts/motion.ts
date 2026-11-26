@@ -30,26 +30,71 @@ if (hero && header) {
   motionAllowed.addEventListener('change', scheduleHero);
 }
 
-if (motionAllowed.matches && 'IntersectionObserver' in window) {
+if ('IntersectionObserver' in window) {
+  const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
+  const nearby = new Set<HTMLElement>();
+  const appliedY = new WeakMap<HTMLElement, number>();
+  const stagger = new WeakMap<Element, number>();
   document.querySelectorAll('[data-stagger]').forEach(group => {
-    Array.from(group.children).forEach((item, index) => {
-      if (item instanceof HTMLElement) item.style.setProperty('--reveal-delay', `${Math.min(index, 3) * 48}ms`);
-    });
+    Array.from(group.children).forEach((item, index) => stagger.set(item, Math.min(index, 3) * 12));
   });
-  const ready = new WeakSet<Element>();
+  let frame = 0;
+
+  const updateSections = () => {
+    frame = 0;
+    if (!motionAllowed.matches) return;
+    const viewport = document.documentElement.clientHeight;
+    const updates = Array.from(nearby, element => {
+      const bounds = element.getBoundingClientRect();
+      const offset = element.matches(':focus-within') ? 0 : (appliedY.get(element) ?? 0);
+      const travel = Math.max(48, Math.min(145, bounds.height * .65));
+      const distance = Math.min(bounds.bottom - offset, viewport - bounds.top + offset);
+      const progress = Math.max(0, Math.min(1, (distance - (stagger.get(element) ?? 0)) / travel));
+      const eased = progress * progress * (3 - 2 * progress);
+      const remaining = 1 - eased;
+      const kind = element.dataset.reveal;
+      const side = element.closest('.image-left') ? -1 : 1;
+      const amplitude = kind === 'panel' ? -17 : kind === 'photo' ? 21 : 0;
+      const horizontal = wideScreen.matches ? amplitude * side : 0;
+      const y = (kind === 'photo' ? 11 : 17) * remaining;
+      return { element, eased, x: horizontal * remaining, y };
+    });
+    for (const { element, eased, x, y } of updates) {
+      appliedY.set(element, y);
+      element.style.setProperty('--scroll-x', `${x.toFixed(3)}px`);
+      element.style.setProperty('--scroll-y', `${y.toFixed(3)}px`);
+      element.style.setProperty('--scroll-progress', eased.toFixed(4));
+    }
+  };
+  const scheduleSections = () => {
+    if (!frame && nearby.size && motionAllowed.matches) frame = window.requestAnimationFrame(updateSections);
+  };
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
-      const { target, isIntersecting } = entry;
-      if (!isIntersecting) {
-        target.classList.add('has-left-view');
-        target.classList.remove('is-revealed');
-        ready.add(target);
-      } else if (ready.delete(target)) {
-        target.classList.add('is-revealed');
-      }
+      const element = entry.target as HTMLElement;
+      if (entry.isIntersecting) nearby.add(element);
+      else nearby.delete(element);
     }
-  }, { rootMargin: '32px 0px', threshold: 0 });
-  document.querySelectorAll('[data-reveal]').forEach(element => observer.observe(element));
+    scheduleSections();
+  }, { rootMargin: '160px 0px' });
+
+  const setMotion = () => {
+    if (motionAllowed.matches) {
+      targets.forEach(element => observer.observe(element));
+      scheduleSections();
+      return;
+    }
+    observer.disconnect();
+    nearby.clear();
+    for (const element of targets) {
+      appliedY.delete(element);
+      ['--scroll-x', '--scroll-y', '--scroll-progress'].forEach(variable => element.style.removeProperty(variable));
+    }
+  };
+  setMotion();
+  motionAllowed.addEventListener('change', setMotion);
+  window.addEventListener('scroll', scheduleSections, { passive: true });
+  window.addEventListener('resize', scheduleSections, { passive: true });
 }
 
 const mobileMenu = document.querySelector<HTMLDetailsElement>('.mobile-nav');

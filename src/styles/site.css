@@ -109,12 +109,15 @@ figure { margin: 0; }
 .contact-grid { display: grid; grid-template-columns: 1fr 1.35fr; gap: clamp(2rem, 6vw, 5.5rem); }
 .contact-grid h2 { margin-bottom: 1.1rem; }
 .contact-grid address { font-style: normal; }
-.contact-grid address a { display: block; margin-block-start: .5rem; }
+.contact-grid address a { display: block; margin-block-start: .5rem; overflow-wrap: anywhere; }
 .contact-grid .button { margin-top: 1.1rem; }
+.enquiry-panel { padding: clamp(1.25rem, 4vw, 3rem); border: 1px solid #7d9cbd; background: var(--navy); color: var(--white); }
+.enquiry-panel h2 { color: inherit; }
 .enquiry { display: grid; gap: .85rem; }
 .enquiry label { display: grid; gap: .28rem; font-weight: 700; }
 .enquiry input, .enquiry textarea { min-width: 0; min-height: 2.75rem; padding: .65rem .75rem; border: 1px solid #718399; border-radius: 0; color: var(--ink); background: var(--white); font: inherit; font-weight: 400; }
 .enquiry textarea { resize: vertical; }
+.enquiry :focus-visible { outline-color: var(--white); }
 .enquiry .button { justify-self: start; margin: 0; }
 
 .site-footer { background: var(--navy); color: var(--white); padding-top: clamp(2.3rem, 4.2vw, 4rem); }
@@ -130,22 +133,19 @@ figure { margin: 0; }
   .hero-entrance:nth-child(2) { animation-delay: 65ms; }
   .hero-entrance:nth-child(3) { animation-delay: 130ms; }
   .hero-entrance:nth-child(4) { animation-delay: 195ms; }
-  .is-revealed[data-reveal] { animation: section-rise 620ms var(--ease) both; animation-delay: var(--reveal-delay, 0ms); }
-  .is-revealed[data-reveal='panel'] { animation-name: reveal-panel; }
-  .is-revealed[data-reveal='photo'] { animation: reveal-photo 690ms 45ms var(--ease) both; }
-  .editorial-intro [data-reveal='panel']:not(.has-left-view) { animation: reveal-panel 620ms var(--ease) both; }
-  .editorial-intro [data-reveal='photo']:not(.has-left-view) { animation: reveal-photo 690ms 45ms var(--ease) both; }
-  .editorial-intro.image-left [data-reveal='panel'] { animation-delay: 90ms; }
-  .editorial-intro.offset-up [data-reveal='photo'] { animation-delay: 105ms; }
-  .is-revealed .rule, .rule.hero-entrance { animation: rule-in 330ms var(--ease) both; }
-  .image-left { --panel-shift: 12px; --photo-shift: -14px; }
-  [data-reveal]:focus-within, .hero-entrance:focus-within { animation: none !important; }
+  [data-reveal] { translate: var(--scroll-x, 0px) var(--scroll-y, 0px); opacity: calc(.76 + .24 * var(--scroll-progress, 1)); }
+  [data-reveal] .rule { scale: calc(.25 + .75 * var(--scroll-progress, 1)) 1; }
+  .rule.hero-entrance { animation: rule-in 330ms var(--ease) both; }
+  .editorial-intro h1, .compact-intro h1 { animation: rise 620ms var(--ease) both; }
+  .editorial-intro .photo-frame img { animation: intro-image 720ms 45ms var(--ease) both; }
+  .editorial-intro.image-left h1 { animation-delay: 90ms; }
+  .editorial-intro.offset-up .photo-frame img { animation-delay: 105ms; }
+  [data-reveal]:focus-within { translate: none; opacity: 1; }
+  .hero-entrance:focus-within { animation: none; }
 }
 @keyframes hero-image { from { opacity: .75; transform: scale(1.075); } to { opacity: 1; transform: translateY(var(--hero-shift, 0px)) scale(var(--hero-scale)); } }
 @keyframes rise { from { opacity: .72; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-@keyframes section-rise { from { opacity: .68; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-@keyframes reveal-panel { from { opacity: .67; transform: translate(var(--panel-shift, -12px), 9px); } to { opacity: 1; transform: none; } }
-@keyframes reveal-photo { from { opacity: .72; transform: translate(var(--photo-shift, 14px), 6px); } to { opacity: 1; transform: none; } }
+@keyframes intro-image { from { opacity: .86; transform: scale(1.045); } to { opacity: 1; transform: none; } }
 @keyframes rule-in { from { transform: scaleX(.2); } to { transform: scaleX(1); } }
 
 @media (max-width: 49rem) {
@@ -160,7 +160,7 @@ figure { margin: 0; }
   .mobile-nav a[aria-current] { text-decoration: underline var(--coral) 2px; }
   .hero-media::after { background: linear-gradient(180deg, rgb(7 25 43 / .76), rgb(10 33 55 / .8) 55%, rgb(7 25 43 / .82)), linear-gradient(90deg, rgb(7 25 43 / .25), transparent); }
   .hero-inner h1 { max-width: 14ch; }
-  .editorial-grid { display: block; --panel-shift: 0px; --photo-shift: 0px; }
+  .editorial-grid { display: block; }
   .editorial-grid::before { display: none; }
   .editorial-panel, .offset-up .editorial-panel { margin: 0; }
   .editorial-photo, .offset-up .editorial-photo { margin: 0 0 0 1rem; }
