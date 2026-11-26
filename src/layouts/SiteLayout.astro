@@ -23,7 +23,7 @@ const canonical = Astro.site && !noindex ? new URL(current, Astro.site) : undefi
     {Astro.site && <meta property="og:image" content={new URL('/images/hero.webp', Astro.site)} />}
     {canonical && <link rel="canonical" href={canonical} />}
     {canonical && <meta property="og:url" content={canonical} />}
-    <link rel="icon" href="/images/matrox-emblem.webp" type="image/webp" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="96x96" />
   </head>
   <body class:list={{ overview }}>
     <a class="skip" href="#main">Skip to content</a>

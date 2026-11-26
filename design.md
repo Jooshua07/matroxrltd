@@ -151,7 +151,7 @@ Use motion to show the relationship between the photograph, panel and text. Tie 
 
 ## Logo and photography
 
-- Use `Matrox-Full-Logo-Horizontal.png` on light surfaces and `Matrox-Full-Logo-Horizontal-for-Navy.png` on navy. Use the stacked export where the available area is compact. Reserve the navy or white M emblem for small brand placements such as the favicon. Preserve the supplied artwork and aspect ratio.
+- Use `Matrox-Full-Logo-Horizontal.png` on light surfaces and `Matrox-Full-Logo-Horizontal-for-Navy.png` on navy. Use the stacked export where the available area is compact. Use the opaque white M on navy from `Matrox-Email-Profile-Picture.png` for the favicon. Preserve the supplied artwork and aspect ratio.
 - Use approved field imagery showing water infrastructure, fieldwork and community settings. Plan for a `3:2` crop on listing cards and preserve useful context in project galleries. Record Bantu photography attribution in the README. Follow [AGENTS.md](AGENTS.md) for the WebP workflow, intrinsic dimensions, responsive variants and loading behaviour.
 
 ## Component library
